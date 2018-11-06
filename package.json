@@ -1,0 +1,23 @@
+{
+  "name": "red-contrib-pushbear",
+  "version": "1.0.2",
+  "description": "node red node for pushbear",
+  "main": "pushbear.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "node-red",
+    "pushbear"
+  ],
+  "node-red": {
+    "nodes": {
+      "pushbear": "pushbear.js"
+    }
+  },
+  "author": "yaming116",
+  "license": "MIT",
+  "dependencies": {
+    "axios": "^0.18.0"
+  }
+}

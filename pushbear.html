@@ -1,0 +1,71 @@
+<script type="text/javascript">
+    RED.nodes.registerType('pushbear',{
+        category: 'function',
+        color: '#a6bbcf',
+        defaults: {
+            server: {value:"", type:"pushbear-server"},
+            title: {value:""}, 
+            content: {value:""}
+        },
+        inputs:1,
+        outputs:1,
+        icon: " function.png",
+        label: function() {
+            return this.name||"pushbear";
+        },
+    });
+
+    RED.nodes.registerType('pushbear-server',{
+        category: 'config',
+        defaults: {
+            name : { value:"默认通道",required:true},
+            sendkey : {value:"",required:true},
+            title : { value:"", required:false},
+        },
+        label: function() {
+            return this.name;
+        }
+    });
+</script>
+
+<script type="text/x-red" data-template-name="pushbear">
+    <div class="form-row">
+        <label for="node-input-server"><i class="icon-tag"></i> Server</label>
+        <input type="text" id="node-input-server" placeholder="Server">
+    </div>
+
+    <div class="form-row">
+        <label for="node-input-title"><i class="icon-tag"></i> 标题</label>
+        <input type="text" id="node-input-title" maxlength='78' placeholder="(msg.topic)">
+    </div>
+
+    <div class="form-row">
+        <label for="node-input-content"><i class="icon-tag"></i> 内容</label>
+        <textarea  type="text" id="node-input-content" placeholder="(msg.payload)">
+    </div>
+</script>
+
+
+<script type="text/x-red" data-help-name="pushbear">
+    <p>A simple node that converts the message payloads into all lower-case characters</p>
+</script>
+
+
+<script type="text/x-red" data-template-name="pushbear-server">
+    <div class="form-row">
+        <label for="node-config-input-name"><i class="icon-bookmark"></i> 通道名称</label>
+        <input type="text" id="node-config-input-name">
+    </div>
+    <div class="form-row">
+        <label for="node-config-input-sendkey"><i class="icon-bookmark"></i> sendkey</label>
+        <input type="text" id="node-config-input-sendkey">
+    </div>
+    <div class="form-row">
+        <label for="node-config-input-title"><i class="icon-bookmark"></i> 默认标题</label>
+        <input type="text" id="node-config-input-title">
+    </div>
+</script>
+
+<script type="text/x-red" data-help-name="pushbear-server">
+    <p>配置pushbear通道信息, 如果发送消息不包含标题,则使用这里填写的title</p>
+</script>
