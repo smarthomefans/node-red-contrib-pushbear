@@ -1,5 +1,5 @@
 {
-  "name": "red-contrib-pushbear",
+  "name": "node-red-contrib-pushbear",
   "version": "1.0.2",
   "description": "node red node for pushbear",
   "main": "pushbear.js",
