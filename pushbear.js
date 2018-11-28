@@ -1,5 +1,6 @@
 module.exports = function(RED) {
     var axios = require('axios');
+    var mustache = require("mustache");
     axios.defaults.headers.common['Content-Type'] = 'application/x-www-form-urlencoded; charset=UTF-8';
     function pushbearNode(config) {
         RED.nodes.createNode(this,config);
@@ -17,8 +18,26 @@ module.exports = function(RED) {
         
         node.on('input', function(msg) {
             let title = config.title || msg.topic || this.server.title;
-            let content = config.content || msg.payload;
             let sendkey = this.server.sendkey
+
+            let nodeData = config.content;
+            var isTemplatedData = (nodeData||"").indexOf("{{") != -1;
+
+            var data = nodeData || msg.payload;
+            if (msg.payload && nodeData && (nodeData !== msg.payload)) {  // revert change below when warning is finally removed
+                node.warn(RED._("common.errors.nooverride"));
+            }
+
+            if (isTemplatedData) {
+                data = mustache.render(nodeData,msg);
+            }
+
+            if (!data) {
+                node.error(RED._("没有需要推送的数据"),msg);
+                return;
+            }
+
+            let content = data
 
             //https://pushbear.ftqq.com/sub?sendkey={sendkey}&text={text}&desp={desp}
               axios({
